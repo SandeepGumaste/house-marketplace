@@ -20,18 +20,11 @@ const Profile = () => {
   };
   useEffect(() => {
     const auth = getAuth(app);
-    console.log(auth);
-    const timer = setTimeout(() => {
-      if (auth.currentUser?.displayName) {
-        console.log(auth);
-        setAuthData(auth);
-        setFormData({
-          name: auth.currentUser.displayName,
-          email: auth.currentUser.email,
-        });
-        clearTimeout(timer);
-      }
-    }, 1000);
+    setAuthData(auth);
+    setFormData({
+      name: auth.currentUser.displayName,
+      email: auth.currentUser.email,
+    });
   }, []);
 
   const { name, email } = formData;
