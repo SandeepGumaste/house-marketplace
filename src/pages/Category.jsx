@@ -13,7 +13,7 @@ import { db } from "../firebase.config";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 import ListingItem from "../components/ListingItem";
-const Offers = () => {
+const Category = () => {
   const [listings, setListings] = useState(null);
   const [loading, setLoading] = useState(true);
   const params = useParams();
@@ -28,7 +28,13 @@ const Offers = () => {
         // create query
         const q = query(
           listingRef,
-          where("offer", "==", true, orderBy("timeStamp", "desc"), limit(10))
+          where(
+            "type",
+            "==",
+            params.categoryName,
+            orderBy("timeStamp", "desc"),
+            limit(10)
+          )
         );
         // execute query
         const querySnap = await getDocs(q);
@@ -64,16 +70,21 @@ const Offers = () => {
           <main>
             <ul className="categoryListings">
               {listings.map((item) => (
-                <ListingItem listing={item.data} id={item.id} key={item.id} />
+                <ListingItem
+                  listing={item.data}
+                  id={item.id}
+                  key={item.id}
+                  //   onDelete={onDelete}
+                />
               ))}
             </ul>
           </main>
         </React.Fragment>
       ) : (
-        <p>No Current Offers</p>
+        <p>No listings for {params.categoryName} </p>
       )}
     </div>
   );
 };
 
-export default Offers;
+export default Category;
