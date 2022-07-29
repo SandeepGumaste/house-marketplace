@@ -6,7 +6,15 @@ import { db } from "../firebase.config";
 import shareIcon from "../assets/svg/shareIcon.svg";
 import Spinner from "../components/Spinner";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+import { toast } from "react-toastify";
 
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 const Listing = () => {
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -14,7 +22,6 @@ const Listing = () => {
 
   const navigate = useNavigate();
   const params = useParams();
-  console.log(params);
   const auth = getAuth();
 
   useEffect(() => {
@@ -24,12 +31,12 @@ const Listing = () => {
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-          console.log(docSnap.data());
           setListing(docSnap.data());
           setLoading(false);
         }
       } catch (error) {
         console.log(error);
+        toast.error("Unable to fetch listing");
       }
     };
     fetchListing();
@@ -43,6 +50,23 @@ const Listing = () => {
 
   return (
     <main>
+      <Swiper slidesPerView={1} pagination={{ clickable: true }}>
+        {listing.imageUrls.map((url, index) => {
+          return (
+            <SwiperSlide key={index}>
+              <img
+                src={url}
+                style={{
+                  objectFit: "cover",
+                  maxHeight: "30vh",
+                  width: "100%",
+                }}
+                alt="house-img"
+              />
+            </SwiperSlide>
+          );
+        })}
+      </Swiper>
       <div
         className="shareIconDiv"
         onClick={() => {
