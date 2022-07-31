@@ -13,6 +13,7 @@ import Category from "./pages/Category";
 import ForgotPassword from "./pages/ForgotPassword";
 import Navbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
+import EditListing from "./pages/EditListing";
 function App() {
   return (
     <>
@@ -33,6 +34,9 @@ function App() {
           </Route>
           <Route path="/create-listing" element={<PrivateRoute />}>
             <Route path="/create-listing" element={<CreateListing />} />
+          </Route>
+          <Route path="/edit-listing/:listingId" element={<PrivateRoute />}>
+            <Route path="/edit-listing/:listingId" element={<EditListing />} />
           </Route>
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />

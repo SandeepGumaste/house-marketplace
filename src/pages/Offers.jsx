@@ -16,9 +16,9 @@ import ListingItem from "../components/ListingItem";
 const Offers = () => {
   const [listings, setListings] = useState(null);
   const [loading, setLoading] = useState(true);
-  const params = useParams();
+  const [lastFetchedListing, setLastFetchedListing] = useState(null);
 
-  const onDelete = async () => {};
+  const params = useParams();
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -48,6 +48,37 @@ const Offers = () => {
 
     fetchListings();
   }, [params]);
+
+  const onFetchMore = async () => {
+    try {
+      // get reference
+      const listingRef = collection(db, "listings");
+      // create query
+      const q = query(
+        listingRef,
+        where("offer", "==", true),
+        orderBy("timeStamp", "desc"),
+        startAfter(lastFetchedListing),
+        limit(10)
+      );
+
+      // execute query
+      const querySnap = await getDocs(q);
+      const lastVisible = querySnap.docs[querySnap.docs.length - 1];
+      setLastFetchedListing(lastVisible);
+      let listings = [];
+      querySnap.forEach((doc) => {
+        return listings.push({
+          id: doc.id,
+          data: doc.data(),
+        });
+      });
+      setListings((prev) => [...prev, ...listings]);
+      setLoading(false);
+    } catch (error) {
+      toast.error("Could not fetch Listings");
+    }
+  };
   return (
     <div className="category">
       <header>
@@ -68,6 +99,13 @@ const Offers = () => {
               ))}
             </ul>
           </main>
+          <br />
+          <br />
+          {lastFetchedListing && (
+            <p className="loadMore" onClick={onFetchMore}>
+              Load More
+            </p>
+          )}
         </React.Fragment>
       ) : (
         <p>No Current Offers</p>

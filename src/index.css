@@ -134,6 +134,10 @@ button {
   }
 }
 
+.listingsList{
+  padding: 0;
+}
+
 .pageHeader {
   font-size: 2rem;
   font-weight: 800;
