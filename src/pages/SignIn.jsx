@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
@@ -77,12 +77,12 @@ const SignIn = () => {
           <div className="signInBar">
             <p className="signInText">Sign In</p>
             <button className="signInButton">
-              <ArrowRightIcon fill="white" width="34px" height="34px" />
+              <ArrowRightIcon fill="#ffffff" width="34px" height="34px" />
             </button>
           </div>
         </form>
 
-        <OAuth />
+        <OAuth type={"signIn"} />
 
         <Link to="/sign-up" className="registerLink">
           Sign Up Instead

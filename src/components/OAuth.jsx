@@ -4,11 +4,11 @@ import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase.config";
 import { toast } from "react-toastify";
 import googleIcon from "../assets/svg/googleIcon.svg";
-const OAuth = () => {
+const OAuth = ({ type }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const onGoogleClick = async () => {
+  const onGoogleClick = async (type) => {
     try {
       const auth = getAuth();
       const provider = new GoogleAuthProvider();
@@ -24,7 +24,11 @@ const OAuth = () => {
           timeStamp: serverTimestamp(),
         });
         navigate("/");
-      } else {
+      } else if (docSnap.exists() && type === "signIn") {
+        navigate("/");
+
+        toast.error("User already exists. Try Logging in.");
+      } else if (docSnap.exists() && type === "signUp") {
         toast.error("User already exists. Try Logging in.");
       }
     } catch (error) {
