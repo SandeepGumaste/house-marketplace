@@ -26,8 +26,6 @@ const OAuth = ({ type }) => {
         navigate("/");
       } else if (docSnap.exists() && type === "signIn") {
         navigate("/");
-
-        toast.error("User already exists. Try Logging in.");
       } else if (docSnap.exists() && type === "signUp") {
         toast.error("User already exists. Try Logging in.");
       }
@@ -39,7 +37,7 @@ const OAuth = ({ type }) => {
   return (
     <div className="socialLogin">
       <p>Sign {location.pathname === "/sign-up" ? "up" : "in"} with</p>
-      <button className="socialIconDiv" onClick={onGoogleClick}>
+      <button className="socialIconDiv" onClick={() => onGoogleClick(type)}>
         <img className="socialIconImg" src={googleIcon} alt="googleIcon" />
       </button>
     </div>
