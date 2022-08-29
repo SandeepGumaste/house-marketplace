@@ -1,29 +1,31 @@
-# How to run
 
-1. Install npm modules
+## Run Locally
 
-```
-npm install
-```
+Clone the project
 
-2. Run the app
-
-- using npm
-
-```
-npm run start
+```bash
+  git clone git@github.com:SandeepGumaste/house-marketplace.git
 ```
 
-or
+Go to the project directory
 
--using yarn
-
-```
-yarn start
+```bash
+  cd house-marketplace
 ```
 
-# Tech stack used
+Install dependencies
 
-## 1. React
+```bash
+  npm install
+```
 
-## 2. Firebase
+Put the firebase config file from your firebase account app in src folder
+For Users,listing and storage rules refer [this](https://gist.github.com/bradtraversy/6d7de7e877d169a6aa4e61140d25767f) gist by Brad Traversy and set them up accordingly
+
+
+Start the server
+
+```bash
+  npm run start
+```
+
