@@ -19,7 +19,8 @@ Install dependencies
   npm install
 ```
 
-Put the firebase config file from your firebase account app in src folder
+Put the firebase config file from your firebase account app in src folder.
+
 For Users,listing and storage rules refer [this](https://gist.github.com/bradtraversy/6d7de7e877d169a6aa4e61140d25767f) gist by Brad Traversy and set them up accordingly
 
 
